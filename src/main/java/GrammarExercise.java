@@ -15,17 +15,18 @@ public class GrammarExercise {
 
     public static List<String> findCommonWordsWithSpace(String firstWordList, String secondWordList) {
         //在这编写实现代码
+        // 连续逗号和非字母检测报RuntimeException
         String word = firstWordList.concat(secondWordList);
         if (word.matches(".*?,,+.*") || word.matches("[^a-zA-Z,]")) {
             throw new RuntimeException("input not valid");
         }
-
+        // 全部转为大写字母
         firstWordList = firstWordList.toUpperCase();
         secondWordList = secondWordList.toUpperCase();
-
+        // 根据逗号分隔字符串
         String [] first = firstWordList.split(",");
         String [] second = secondWordList.split(",");
-
+        // 找出重复的字符串，并去重排序，字母间插入空格
         List<String> result = Arrays.asList(first).stream().filter(item -> Arrays.asList(second).contains(item)).collect(Collectors.toList());
         result = new ArrayList<>(new HashSet<>(result));
         Collections.sort(result);
